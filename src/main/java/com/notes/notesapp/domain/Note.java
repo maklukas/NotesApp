@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 
 @Document
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 public class Note {
@@ -25,5 +24,10 @@ public class Note {
     public String toString() {
         return "Note :" +
                 "at " + dateTime + ", note='" + note;
+    }
+
+    public Note(LocalDateTime dateTime, String note) {
+        this.dateTime = dateTime;
+        this.note = note;
     }
 }

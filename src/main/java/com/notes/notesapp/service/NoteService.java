@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class NoteService {
@@ -55,6 +56,17 @@ public class NoteService {
     public boolean updateNote(Note note) {
         LOGGER.info("Updating note");
         repo.save(note);
+        return true;
+    }
+
+    public boolean partialUpdate(Note note, Map< String, Object> updates) {
+        if (updates.containsKey("dateTime")) {
+            note.setDateTime((LocalDateTime) updates.get("dateTime"));
+        }
+        if (updates.containsKey("note")) {
+            note.setNote((String) updates.get("note"));
+        }
+        updateNote(note);
         return true;
     }
 

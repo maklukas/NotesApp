@@ -6,10 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/notes")
+@CrossOrigin("*")
 public class NoteController {
 
     private NoteService service;
@@ -45,8 +48,20 @@ public class NoteController {
     }
 
     @DeleteMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void deleteNote(@RequestBody Note note) {
+    public void deleteNote(@RequestBody Note note) throws NoteNotFoundException {
+        if (note == null) {
+            throw new NoteNotFoundException();
+        }
         service.deleteNote(note);
+    }
+
+    @PatchMapping(params = "id", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void patchNote(@RequestParam String id, @RequestBody Map< String, Object> updates) throws NoteNotFoundException {
+        Note note = service.getNote(id);
+        if (note == null) {
+            throw new NoteNotFoundException();
+        }
+        service.partialUpdate(note, updates);
     }
 
 }
