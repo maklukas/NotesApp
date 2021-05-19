@@ -25,6 +25,8 @@ public class BaseController extends VerticalLayout {
     public BaseController(NoteService noteService) {
         this.noteService = noteService;
 
+       // setSizeFull();
+        setDefaultHorizontalComponentAlignment(Alignment.CENTER);
         showAllNotes();
         showCleanNote();
     }
@@ -63,6 +65,7 @@ public class BaseController extends VerticalLayout {
                 "Note deleted..", 3000);
         Notification notificationUpdate = new Notification(
                 "Note updated..", 3000);
+
 
         List<Note> notes = noteService.getNotes();
         for (Note n: notes) {
